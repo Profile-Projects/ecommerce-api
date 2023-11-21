@@ -1,8 +1,36 @@
 const express = require("express");
+const bodyParser = require("body-parser");
+const cors = require("cors");
+
+// Controllers
+const CustomerController = require("./controller/CustomerController");
 
 
 const app = express();
 const PORT = 3000;
+
+const VERSION = `v1`;
+const SERVICE_PATH = `ecom/api`
+
+
+const corsOptions = {
+    origin: '*', // This allows requests from any origin.
+    methods: ['GET', 'POST', 'PUT', 'DELETE'], // This allows the specified methods.
+    headers: ['Content-Type', 'Authorization'], // This allows the specified headers.
+};
+
+const errorHandler = (err, req, res, next) => {
+    console.log(err);
+    res.status(500).json({message: 'Internal Server Error', error: err?.message || ""});
+}
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+
+app.use(cors(corsOptions));
+
+app.use(`/${SERVICE_PATH}/${VERSION}/customer`, CustomerController);
+
 
 app.get(`/test`, (req, res) => {
     return res.status(200).json({ message: "E-commerce website is up and running!"})

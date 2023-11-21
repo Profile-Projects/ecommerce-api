@@ -1,0 +1,14 @@
+CREATE TABLE customer (
+  id SERIAL PRIMARY KEY,
+  sid VARCHAR(20) UNIQUE,
+  phone_number VARCHAR(50),
+  email VARCHAR(100),
+  address JSONB
+)
+
+CREATE TABLE customer_account(
+    id SERIAL PRIMARY KEY,
+    sid VARCHAR(20) UNIQUE,
+    customer_id VARCHAR(20) REFERENCES customer(sid),
+    password VARCHAR(50)
+);
