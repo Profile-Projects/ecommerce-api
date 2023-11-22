@@ -18,8 +18,8 @@ class CustomerService extends CrudService {
 
     async insert({ values }) {
 
-        const [phone_number, email, address, password] = values;
-        const sid = await super.insert({ values: [phone_number, email, address] });
+        const [name, phone_number, email, address, password] = values;
+        const sid = await super.insert({ values: [name, phone_number, email, address] });
         const account_sid = await customerAccountService.insert({
             values: [sid, password]
         });

@@ -14,3 +14,23 @@ CREATE TABLE customer_account(
 );
 
 ALTER TABLE review RENAME COLUMN customer_id TO customer_sid;
+
+
+/************************************************************/
+/*  PARTNER                                                */
+/**********************************************************/
+
+CREATE TABLE partner (
+  id SERIAL PRIMARY KEY,
+  sid VARCHAR(20) UNIQUE,
+  phone_number VARCHAR(20),
+  email VARCHAR(100),
+  address JSONB
+);
+
+CREATE TABLE partner_account (
+  id SERIAL PRIMARY KEY,
+  sid VARCHAR(20) UNIQUE,
+  partner_sid VARCHAR(20) REFERENCES partner(sid),
+  password VARCHAR(20)
+);

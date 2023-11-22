@@ -21,8 +21,8 @@ class CustomerRepository extends CrudRepository {
         return this.getRow(result);
     }
 
-    format([ sid, phone_number, email, address]) {
-        return [sid, phone_number, email, JSON.stringify(address)];
+    format([ sid, name, phone_number, email, address]) {
+        return [sid, name, phone_number, email, JSON.stringify(address)];
     }
 }
 

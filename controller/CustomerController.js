@@ -47,6 +47,7 @@ router.post(`/`, async (req, res, next) => {
     try {
 
         const {
+            name,
             phone_number = null,
             email = null,
             password = DEFAULT_PASSWORD,
@@ -54,7 +55,7 @@ router.post(`/`, async (req, res, next) => {
         } = req.body;
 
         const { sid, account_sid } = await customerService.insert({
-            values: [phone_number, email, address, password]
+            values: [name, phone_number, email, address, password]
         });
 
         return res.status(201).json({ sid, account_sid, message: "Customer created!"})
