@@ -3,6 +3,7 @@ const express = require("express");
 const CustomerService = require("../service/CustomerService");
 const CustomerAccountService = require("../service/CustomerAccountService");
 const { DEFAULT_PASSWORD } = require("../utils/passwordUtils");
+const { validateCustomerToken } = require("../utils/tokenUtils");
 
 const router = express.Router();
 
@@ -21,16 +22,24 @@ router.post(`/login`, async (req, res, next) => {
             phone_number
         } = req.body;
     
-        const { valid, message, token } = await customerService.login({ email, phone_number, password });
+        const { valid, message, token, account_sid } = await customerService.login({ email, phone_number, password });
 
         if (!valid) {
             return res.status(400).json({ message });
         }
 
-        return res.status(200).json({ message: "logged in!", token })
+        return res.status(200).json({ message: "logged in!", token, account_sid })
 
     } catch(err) {
         next(err);
+    }
+});
+
+router.post(`/logout`, validateCustomerToken, async (req, res, next) => {
+    try {
+        return res.status(200).json({ message: "Customer logged out!"});
+    } catch(err) {
+        next();
     }
 });
 
@@ -52,7 +61,6 @@ router.post(`/`, async (req, res, next) => {
 
     } catch(err) {
         next(err);
-
     }
 });
 

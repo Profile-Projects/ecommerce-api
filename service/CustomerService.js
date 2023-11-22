@@ -1,6 +1,6 @@
 const CustomerNotFoundException = require("../exceptions/CustomerNotFoundException");
 const CustomerRepository = require("../repository/CustomerRepository");
-const { generateCustomerToken } = require("../utils/tokenUtils");
+const { generateCustomerToken, SECRET } = require("../utils/tokenUtils");
 const CrudService = require("./CrudService");
 const CustomerAccountService = require("./CustomerAccountService");
 
@@ -38,7 +38,7 @@ class CustomerService extends CrudService {
         });
 
         // TODO if actual password is wrong add exception
-        const { password: actual_password } = account;
+        const { password: actual_password, sid: account_sid } = account;
 
         if (!actual_password || actual_password !== password) {
             return {
@@ -49,13 +49,14 @@ class CustomerService extends CrudService {
 
         // token generation
         const token = generateCustomerToken({
-            customer_sid: sid,
-            secret: "secret",
+            account_sid,
+            secret: SECRET,
         });
 
         return {
             valid: true,
-            token
+            token,
+            account_sid
         }
     }
 };
