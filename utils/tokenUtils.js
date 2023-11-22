@@ -1,9 +1,11 @@
 const jwt = require("jsonwebtoken");
+const TokenExpiredException = require("../exceptions/TokenExpiredException");
+const TokenInvalidException = require("../exceptions/TokenInvalidException");
 
 const SECRET = "secret";
 
 
-const generateCustomerToken = ({
+const generateToken = ({
     account_sid,
     secret,
     expiry = '30m'
@@ -18,7 +20,7 @@ const generateCustomerToken = ({
         })
 };
 
-const validateCustomerToken = (
+const validateToken = (
     req,
     res, 
     next
@@ -49,12 +51,12 @@ const validateCustomerToken = (
         req.account_sid = decoded.account_sid;
         next();
     } catch (err) {
-        throw new Error(`Error on Token decoding.`);
+        throw new Error(`Error on Token decoding. ${err?.message}`);
     }
 };
 
 module.exports = {
-    generateCustomerToken,
-    validateCustomerToken,
+    generateToken,
+    validateToken,
     SECRET
 };

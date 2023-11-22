@@ -5,3 +5,5 @@ class TokenExpiredException extends Error {
         super(`Token for account ${account_sid} has expired`);
     }
 }
+
+module.exports = TokenExpiredException;

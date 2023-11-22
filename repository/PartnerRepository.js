@@ -1,4 +1,5 @@
 const db = require("../db/db");
+const { findByEmailQuery } = require("../queries/PartnerQueries");
 
 const CrudRepository = require("./CrudRepository");
 
@@ -13,6 +14,12 @@ class PartnerRepository extends CrudRepository {
 
     async insert({ values }) {
         return await super.insert({ values: this.format(values)});
+    }
+
+    async findByEmail({ email }) {
+        const query = findByEmailQuery({});
+        const result = await db.query(query, [email]);
+        return this.getRow(result);
     }
 
     format([ sid, name, phone_number, email, address]) {
