@@ -3,7 +3,7 @@ const express = require("express");
 const CustomerService = require("../service/CustomerService");
 const CustomerAccountService = require("../service/CustomerAccountService");
 const { DEFAULT_PASSWORD } = require("../utils/passwordUtils");
-const { validateCustomerToken } = require("../utils/tokenUtils");
+const { validateToken } = require("../utils/tokenUtils");
 
 const router = express.Router();
 
@@ -35,7 +35,7 @@ router.post(`/login`, async (req, res, next) => {
     }
 });
 
-router.post(`/logout`, validateCustomerToken, async (req, res, next) => {
+router.post(`/logout`, validateToken, async (req, res, next) => {
     try {
         return res.status(200).json({ message: "Customer logged out!"});
     } catch(err) {
@@ -47,6 +47,7 @@ router.post(`/`, async (req, res, next) => {
     try {
 
         const {
+            name,
             phone_number = null,
             email = null,
             password = DEFAULT_PASSWORD,
@@ -54,7 +55,7 @@ router.post(`/`, async (req, res, next) => {
         } = req.body;
 
         const { sid, account_sid } = await customerService.insert({
-            values: [phone_number, email, address, password]
+            values: [name, phone_number, email, address, password]
         });
 
         return res.status(201).json({ sid, account_sid, message: "Customer created!"})

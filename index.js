@@ -4,6 +4,7 @@ const cors = require("cors");
 
 // Controllers
 const CustomerController = require("./controller/CustomerController");
+const PartnerConroller = require("./controller/PartnerController");
 
 
 const app = express();
@@ -30,6 +31,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors(corsOptions));
 
 app.use(`/${SERVICE_PATH}/${VERSION}/customer`, CustomerController);
+app.use(`/${SERVICE_PATH}/${VERSION}/partner`, PartnerConroller);
 
 
 app.get(`/test`, (req, res) => {
