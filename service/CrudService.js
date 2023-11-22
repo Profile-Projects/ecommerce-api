@@ -1,3 +1,4 @@
+const { getNumber } = require("../utils/sidUtils");
 
 class CrudService {
 
@@ -69,7 +70,7 @@ class CrudService {
 
     async fetchAndSetNextSid() {
         const result = await this.repository.findMaxSid();
-        const { max: existingSid = "XX00000" } = result;
+        const { max: existingSid = "XX00000" } = result || {};
         if (!result || !existingSid) {
             this.nextSid = 1;
             console.log(`new sid number is ${this.sidPrefix} ${this.nextSid}`);

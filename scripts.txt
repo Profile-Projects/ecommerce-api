@@ -9,6 +9,8 @@ CREATE TABLE customer (
 CREATE TABLE customer_account(
     id SERIAL PRIMARY KEY,
     sid VARCHAR(20) UNIQUE,
-    customer_id VARCHAR(20) REFERENCES customer(sid),
+    customer_sid VARCHAR(20) REFERENCES customer(sid),
     password VARCHAR(50)
 );
+
+ALTER TABLE review RENAME COLUMN customer_id TO customer_sid;

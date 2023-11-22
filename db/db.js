@@ -5,6 +5,8 @@ const config = require("./getConfig");
 const dbConfig = config["database"];
 
 const fs = require('fs');
+const { text } = require("body-parser");
+const { param } = require("../controller/CustomerController");
 
 console.log(` dbconfig : ${JSON.stringify(dbConfig)}`);
 
@@ -45,7 +47,15 @@ async function connectWithRetries(maxRetries, retryInterval, text, params) {
     }
 };
 
+const retryWrapper = (text, params, needsRetry) => {
+    if (needsRetry) {
+        return connectWithRetries(3, 2000, text, params);
+    }
+
+    return connectWithRetries(1, 1000, text, params);
+}
+
 
 module.exports = {
-    query: (text, params) =>  connectWithRetries(3, 2000, text, params)
+    query: (text, params, needsRetry = true) =>  retryWrapper(text, params, needsRetry)
 };

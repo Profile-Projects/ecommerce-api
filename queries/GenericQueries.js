@@ -1,13 +1,9 @@
-
-
 const insertQuery = (
     tableName,
     columnNames
 ) => {
     return generateInsertQuery(tableName, columnNames);
 }
-
-
 
 /**
  * 

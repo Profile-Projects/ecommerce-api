@@ -1,3 +1,5 @@
+const db = require("../db/db");
+const { findByEmailQuery } = require("../queries/CustomerQueries");
 const CrudRepository = require("./CrudRepository");
 
 const tableName = "customer";
@@ -11,6 +13,12 @@ class CustomerRepository extends CrudRepository {
     
     async insert({ values}) {
         return await super.insert({values: this.format(values)});
+    }
+
+    async findByEmail({ email }) {
+        const query = findByEmailQuery({});
+        const result = await db.query(query, [email]);
+        return this.getRow(result);
     }
 
     format([ sid, phone_number, email, address]) {
