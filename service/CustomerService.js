@@ -1,6 +1,6 @@
 const CustomerNotFoundException = require("../exceptions/CustomerNotFoundException");
 const CustomerRepository = require("../repository/CustomerRepository");
-const { generateCustomerToken: generateToken, SECRET } = require("../utils/tokenUtils");
+const { generateToken, SECRET } = require("../utils/tokenUtils");
 const CrudService = require("./CrudService");
 const CustomerAccountService = require("./CustomerAccountService");
 

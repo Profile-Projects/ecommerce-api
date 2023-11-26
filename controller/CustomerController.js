@@ -37,6 +37,9 @@ router.post(`/login`, async (req, res, next) => {
 
 router.post(`/logout`, validateToken, async (req, res, next) => {
     try {
+        const { 
+            customer_sid
+        } = req.body;
         return res.status(200).json({ message: "Customer logged out!"});
     } catch(err) {
         next();
