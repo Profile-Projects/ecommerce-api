@@ -34,3 +34,40 @@ CREATE TABLE partner_account (
   partner_sid VARCHAR(20) REFERENCES partner(sid),
   password VARCHAR(20)
 );
+
+
+/************************************************************/
+/*  PRODUCT                                                */
+/**********************************************************/
+
+CREATE TABLE category (
+  id SERIAL PRIMARY KEY,
+  sid VARCHAR(20) UNIQUE,
+  root VARCHAR(50),  
+);
+
+CREATE TABLE category (
+  id SERIAL PRIMARY KEY,
+  sid VARCHAR(20) UNIQUE,
+  name VARCHAR(200),
+  path LTREE NOT NULL DEFAULT ''
+);
+
+CREATE TABLE product (
+  id SERIAL PRIMARY KEY,
+  sid VARCHAR(20) UNIQUE,
+  partner_sid VARCHAR(20) REFERENCES partner(sid),
+  category_sid VARCHAR(20) REFERENCES category(sid),
+  name VARCHAR(200),
+  description TEXT DEFAULT '',
+  price NUMERIC(5, 2),
+  stock NUMBER(3, 0) DEFAULT 0,
+  created_at TIMESTAMP CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP CURRENT_TIMESTAMP
+);
+CREATE TABLE product_category (
+  id SERIAL PRIMARY KEY,
+  sid VARCHAR(20) UNIQUE,
+  product_sid VARCHAR(20) REFERENCES product(sid),
+  category_sid VARCHAR(20) REFERENCES category(sid),
+);

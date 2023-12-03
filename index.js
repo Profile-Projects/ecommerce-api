@@ -5,6 +5,7 @@ const cors = require("cors");
 // Controllers
 const CustomerController = require("./controller/CustomerController");
 const PartnerConroller = require("./controller/PartnerController");
+const ProductController = require("./controller/ProductController");
 
 
 const app = express();
@@ -17,7 +18,7 @@ const SERVICE_PATH = `ecom/api`
 const corsOptions = {
     origin: '*', // This allows requests from any origin.
     methods: ['GET', 'POST', 'PUT', 'DELETE'], // This allows the specified methods.
-    headers: ['Content-Type', 'Authorization'], // This allows the specified headers.
+    headers: ['Content-Type', 'Authorization', 'account_sid', 'account_token'], // This allows the specified headers.
 };
 
 const errorHandler = (err, req, res, next) => {
@@ -32,6 +33,7 @@ app.use(cors(corsOptions));
 
 app.use(`/${SERVICE_PATH}/${VERSION}/customer`, CustomerController);
 app.use(`/${SERVICE_PATH}/${VERSION}/partner`, PartnerConroller);
+app.use(`/${SERVICE_PATH}/${VERSION}/product`, ProductController);
 
 
 app.get(`/test`, (req, res) => {
