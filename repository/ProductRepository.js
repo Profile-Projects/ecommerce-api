@@ -3,7 +3,7 @@ const db = require("../db/db");
 const CrudRepository = require("./CrudRepository");
 
 const tableName = "product";
-const columns = ["sid", "partner_sid", "category_sid", "name", "description", "price", "stock"];
+const columns = ["sid", "partner_account_sid", "category_sid", "name", "description", "price", "stock"];
 
 class ProductRepository extends CrudRepository {
     constructor() {

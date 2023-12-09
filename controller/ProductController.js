@@ -24,21 +24,21 @@ router.post(`/category`, validateToken, async (req, res, next) => {
     } catch(err) {
         next();
     }
-})
+});
 
-router.post('/', validateToken, async (req, res, next) => {
+router.post(`/add`, validateToken, async (req, res, next) => {
     try {
         const {
             name,
             description,
             stock,
             price,
-            partner_sid,
+            partner_account_sid,
             category_sid
         } = req.body;
 
         const product_sid = await productService.insert({
-            values: [partner_sid, category_sid, name, description, price, stock]
+            values: [partner_account_sid, category_sid, name, description, price, stock]
         })
 
         return res.status(201).json({ sid: product_sid, message: "Product added to partner"});
@@ -46,6 +46,7 @@ router.post('/', validateToken, async (req, res, next) => {
         next();
     }
 });
+
 
 
 module.exports = router;
