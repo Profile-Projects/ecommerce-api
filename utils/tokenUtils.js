@@ -8,7 +8,7 @@ const SECRET = "secret";
 const generateToken = ({
     account_sid,
     secret,
-    expiry = '30m'
+    expiry = '120m'
 }) => {
     return jwt.sign(
         {

@@ -47,6 +47,39 @@ router.post(`/add`, validateToken, async (req, res, next) => {
     }
 });
 
+router.get(`/`, validateToken, async (req, res, next) => {
+    try {
+        const {
+            partner_account_sid,
+            category_sid,
+            in_stock
+        } = req.query;
+        
+        const products = await productService.findAll({
+            req: {
+                partner_account_sid,
+                category_sid,
+                in_stock
+            }
+        });
+        return res.status(200).json({ products });
 
+    } catch (err) {
+        next();
+    }
+})
+
+router.get(`/:product_sid`, validateToken, async (req, res, next) => {
+    try {
+        const {
+            product_sid
+        } = req.params;
+
+        const product = await productService.findById({ value: product_sid });
+        return res.status(200).json({ product});
+    } catch(err) {
+        next();
+    }
+});
 
 module.exports = router;

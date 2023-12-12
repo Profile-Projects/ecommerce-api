@@ -10,6 +10,16 @@ class ProductRepository extends CrudRepository {
         super(tableName, columns, "sid");
     }
 
+    async findProducts({ cols = [], values }) {
+        const columnObjList = {};
+        cols.forEach((val, index) => {
+            if (val) {
+                columnObjList[val] = values[index]
+            }
+        })
+        return await super.findAllByColumns({ columnObjList });
+    }
+
     // format([sid, partner_sid, category_sid, name, description, price, stock, created_at, updated_at]) {
     //     return 
     // }
