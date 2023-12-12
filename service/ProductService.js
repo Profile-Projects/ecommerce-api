@@ -41,6 +41,23 @@ class ProductService extends CrudService {
         return await super.insert({ values });
     }
 
+    async findAll({ req }) {
+        const cols = [];
+        const values = [];
+
+        if (req['partner_account_sid']) {
+            cols.push('partner_account_sid');
+            values.push(req.partner_account_sid);
+        }
+
+        if (req['category_sid']) {
+            cols.push('category_sid');
+            values.push(req['category_sid']);
+        }
+
+        return await productRepository.findProducts({ cols, values });
+    }
+
 
 };
 

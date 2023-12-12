@@ -72,6 +72,15 @@ const generateUpdateQuery = (table, columnsToUpdate, whereClause) => {
     return query;
   };
 
+
+const generateFindByColumns = (table, columnObjList, values) => {
+  let query =  `SELECT * FROM ${table} where `;
+  let colStr = Object.keys(columnObjList).map((key) => {
+    return ` ${key} = '${columnObjList[key]}' `;
+  }).join(" AND ");
+  return `${query} ${colStr} ;`
+};
+
 const deleteQuery = ({
     tableName,
     sid,
