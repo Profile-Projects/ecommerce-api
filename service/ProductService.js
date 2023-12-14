@@ -55,17 +55,14 @@ class ProductService extends CrudService {
             values.push(req['category_sid']);
         }
 
-        if (req['in_stock'] !== undefined) {
-            cols.push('in_stock');
-            values.push(req['in_stock']);
-        }
         const products = await productRepository.findProducts({ cols, values }) || [];
 
-        if (req['min_price'] || req['max_price']) {
+        if (req['min_price'] || req['max_price'] || req['in_stock']) {
             const min = parseInt(req['min_price']);
             const max = parseInt(req['max_price']);
             const minFiltered = min ? products.filter(product => product.price >= min) : products;
-            return max ? minFiltered.filter(product => product.price <= max) : minFiltered;
+            const maxFilterd =  max ? minFiltered.filter(product => product.price <= max) : minFiltered;
+            return req['in_stock'] ? maxFilterd.filter(product => product?.stock > 0) : maxFilterd;
             }
         return products;
     }
