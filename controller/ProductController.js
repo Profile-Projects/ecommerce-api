@@ -52,14 +52,18 @@ router.get(`/`, validateToken, async (req, res, next) => {
         const {
             partner_account_sid,
             category_sid,
-            in_stock
+            in_stock,
+            min_price,
+            max_price
         } = req.query;
         
         const products = await productService.findAll({
             req: {
                 partner_account_sid,
                 category_sid,
-                in_stock
+                in_stock,
+                min_price,
+                max_price
             }
         });
         return res.status(200).json({ products });
