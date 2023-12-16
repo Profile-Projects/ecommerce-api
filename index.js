@@ -6,6 +6,7 @@ const cors = require("cors");
 const CustomerController = require("./controller/CustomerController");
 const PartnerConroller = require("./controller/PartnerController");
 const ProductController = require("./controller/ProductController");
+const ShoppingCartController = require("./controller/ShoppingCartController");
 
 
 const app = express();
@@ -34,6 +35,7 @@ app.use(cors(corsOptions));
 app.use(`/${SERVICE_PATH}/${VERSION}/customer`, CustomerController);
 app.use(`/${SERVICE_PATH}/${VERSION}/partner`, PartnerConroller);
 app.use(`/${SERVICE_PATH}/${VERSION}/product`, ProductController);
+app.use(`/${SERVICE_PATH}/${VERSION}/shopping_cart`, ShoppingCartController);
 
 
 app.get(`/test`, (req, res) => {
